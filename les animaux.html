@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz sur les Animaux</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f0f8ff;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quel est le plus grand mammifère du monde ?",
+      options: ["L’éléphant d’Afrique", "La girafe", "La baleine bleue", "L’ours polaire"],
+      answer: 2
+    },
+    {
+      question: "Combien de pattes a une araignée ?",
+      options: ["6", "8", "10", "12"],
+      answer: 1
+    },
+    {
+      question: "Quel animal est connu pour son cou très long ?",
+      options: ["L’autruche", "Le zèbre", "La girafe", "Le kangourou"],
+      answer: 2
+    },
+    {
+      question: "Quel animal pond des œufs ?",
+      options: ["Le dauphin", "Le crocodile", "Le singe", "Le chat"],
+      answer: 1
+    },
+    {
+      question: "Quel oiseau ne vole pas mais court très vite ?",
+      options: ["Le colibri", "L’aigle", "Le pingouin", "L’autruche"],
+      answer: 3
+    },
+    {
+      question: "Quel est le plus rapide des animaux terrestres ?",
+      options: ["Le lion", "Le guépard", "Le léopard", "Le tigre"],
+      answer: 1
+    },
+    {
+      question: "Quel animal vit dans une ruche ?",
+      options: ["La mouche", "La fourmi", "L’abeille", "La guêpe"],
+      answer: 2
+    },
+    {
+      question: "Quel animal a une trompe ?",
+      options: ["L’hippopotame", "Le rhinocéros", "L’éléphant", "Le buffle"],
+      answer: 2
+    },
+    {
+      question: "Comment appelle-t-on le cri du cheval ?",
+      options: ["Le mugissement", "Le braiment", "Le hennissement", "Le bêlement"],
+      answer: 2
+    },
+    {
+      question: "Quel animal marin a huit bras ?",
+      options: ["La méduse", "Le poulpe", "Le requin", "Le crabe"],
+      answer: 1
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    document.getElementById("result").textContent = `Tu as obtenu ${score} sur ${quizData.length} !`;
+  }
+
+  // Charger le quiz au démarrage
+  loadQuiz();
+</script>
+
+</body>
+</html>

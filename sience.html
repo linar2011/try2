@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Science pour Enfants</title>
+  <style>
+    body {
+      font-family: Comic Sans MS, sans-serif;
+      background-color: #e0f7fa;
+      margin: 40px;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .result {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #00796b;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>🧠 Quiz : La Science Amusante !</h2>
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "De quoi les plantes ont-elles besoin pour pousser ?",
+      options: ["Du vent", "Du sucre", "Du soleil", "Du sable"],
+      answer: 2
+    },
+    {
+      question: "Combien de planètes tournent autour du Soleil ?",
+      options: ["6", "7", "8", "9"],
+      answer: 2
+    },
+    {
+      question: "Quel est l’état de l’eau quand elle est très froide ?",
+      options: ["Liquide", "Gaz", "Solide", "Poudre"],
+      answer: 2
+    },
+    {
+      question: "Quel organe pompe le sang dans tout le corps ?",
+      options: ["Le cerveau", "Les poumons", "Le cœur", "L’estomac"],
+      answer: 2
+    },
+    {
+      question: "Quel animal pond des œufs ?",
+      options: ["Chien", "Vache", "Poulet", "Lapin"],
+      answer: 2
+    },
+    {
+      question: "Quel gaz respirons-nous ?",
+      options: ["Hydrogène", "Dioxyde de carbone", "Oxygène", "Hélium"],
+      answer: 2
+    },
+    {
+      question: "De quelle couleur est le Soleil vu depuis la Terre ?",
+      options: ["Bleu", "Rouge", "Jaune", "Vert"],
+      answer: 2
+    },
+    {
+      question: "Combien de jambes a une araignée ?",
+      options: ["6", "8", "10", "4"],
+      answer: 1
+    },
+    {
+      question: "Qu'est-ce qui protège la Terre des météorites ?",
+      options: ["La lune", "Les nuages", "L'atmosphère", "Les océans"],
+      answer: 2
+    },
+    {
+      question: "Quel est l'état du ciel pendant un orage ?",
+      options: ["Clair", "Ensoleillé", "Nuageux avec éclairs", "Bleu foncé sans nuages"],
+      answer: 2
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    
+    const resultText = `👏 Tu as eu ${score} bonne${score > 1 ? 's' : ''} réponse${score > 1 ? 's' : ''} sur ${quizData.length} !`;
+    document.getElementById("result").textContent = resultText;
+  }
+
+  loadQuiz();
+</script>
+
+</body>
+</html>

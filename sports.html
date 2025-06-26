@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz Sport</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fffbe6;
+      margin: 40px;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+      background-color: #2196f3;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    .result {
+      font-size: 20px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: #2e7d32;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <h2>🏆 Quiz sur les Sports</h2>
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quel sport se joue avec un ballon rond et 11 joueurs par équipe ?",
+      options: ["Rugby", "Basketball", "Football", "Handball"],
+      answer: 2
+    },
+    {
+      question: "Quel sport utilise une raquette et un volant ?",
+      options: ["Tennis", "Badminton", "Ping-pong", "Squash"],
+      answer: 1
+    },
+    {
+      question: "Quel sport se pratique sur la glace avec une crosse ?",
+      options: ["Curling", "Patinage artistique", "Hockey sur glace", "Ski"],
+      answer: 2
+    },
+    {
+      question: "Combien de joueurs y a-t-il dans une équipe de basket sur le terrain ?",
+      options: ["4", "5", "6", "7"],
+      answer: 1
+    },
+    {
+      question: "Quel sport est pratiqué aux Jeux Olympiques et en piscine ?",
+      options: ["Plongée", "Ski nautique", "Natation", "Aviron"],
+      answer: 2
+    },
+    {
+      question: "Dans quel sport utilise-t-on des gants et un ring ?",
+      options: ["Boxe", "Judo", "Lutte", "Karaté"],
+      answer: 0
+    },
+    {
+      question: "Quel sport se joue avec une batte et une balle ?",
+      options: ["Tennis", "Cricket", "Football", "Basketball"],
+      answer: 1
+    },
+    {
+      question: "Quel pays est connu pour le sumo ?",
+      options: ["Chine", "Corée du Sud", "Thaïlande", "Japon"],
+      answer: 3
+    },
+    {
+      question: "Quel est le grand tournoi de tennis joué en France ?",
+      options: ["Wimbledon", "US Open", "Roland-Garros", "Open d'Australie"],
+      answer: 2
+    },
+    {
+      question: "Combien de tours faut-il faire pour gagner une course de Formule 1 ?",
+      options: ["10", "20", "Varie selon le circuit", "100"],
+      answer: 2
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    document.getElementById("result").textContent = `Tu as eu ${score} bonne(s) réponse(s) sur ${quizData.length} !`;
+  }
+
+  loadQuiz();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz sur les Voitures</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #f9f9f9;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quelle marque fabrique la Mustang ?",
+      options: ["Chevrolet", "Dodge", "Ford", "Toyota"],
+      answer: 2
+    },
+    {
+      question: "Quel pays est le berceau de Ferrari ?",
+      options: ["France", "Allemagne", "Italie", "Espagne"],
+      answer: 2
+    },
+    {
+      question: "Quelle voiture est souvent appelée « la Coccinelle » ?",
+      options: ["Peugeot 206", "Volkswagen Beetle", "Fiat 500", "Renault 4L"],
+      answer: 1
+    },
+    {
+      question: "Quelle voiture électrique est produite par Elon Musk ?",
+      options: ["Tesla", "Rivian", "Lucid", "Volvo"],
+      answer: 0
+    },
+    {
+      question: "Combien de roues a une voiture classique ?",
+      options: ["2", "3", "4", "6"],
+      answer: 2
+    },
+    {
+      question: "Quel constructeur automobile a pour logo un lion ?",
+      options: ["Renault", "Peugeot", "Citroën", "Opel"],
+      answer: 1
+    },
+    {
+      question: "Quelle est la voiture la plus rapide au monde (record 2024) ?",
+      options: ["Bugatti Chiron", "Koenigsegg Jesko", "Hennessey Venom F5", "Tesla Roadster"],
+      answer: 2
+    },
+    {
+      question: "Quelle voiture a joué dans le film 'Retour vers le futur' ?",
+      options: ["Ferrari F40", "Toyota Supra", "DeLorean DMC-12", "Ford GT"],
+      answer: 2
+    },
+    {
+      question: "Quel carburant utilise une voiture électrique ?",
+      options: ["Essence", "Diesel", "Électricité", "Hydrogène"],
+      answer: 2
+    },
+    {
+      question: "Quel pays est célèbre pour ses voitures de luxe comme Audi et BMW ?",
+      options: ["Italie", "Japon", "France", "Allemagne"],
+      answer: 3
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    document.getElementById("result").textContent = `Tu as obtenu ${score} sur ${quizData.length} !`;
+  }
+
+  loadQuiz();
+</script>
+
+</body>
+</html>

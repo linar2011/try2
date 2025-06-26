@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz sur la Géographie</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background-color: #eef5ff;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quel est le plus grand pays du monde par la superficie ?",
+      options: ["Chine", "États-Unis", "Canada", "Russie"],
+      answer: 3
+    },
+    {
+      question: "Quelle est la capitale de l’Australie ?",
+      options: ["Sydney", "Melbourne", "Canberra", "Brisbane"],
+      answer: 2
+    },
+    {
+      question: "Quel est le plus long fleuve du monde ?",
+      options: ["Amazone", "Nil", "Yangtsé", "Mississippi"],
+      answer: 0
+    },
+    {
+      question: "Quel continent a le plus de pays ?",
+      options: ["Europe", "Asie", "Afrique", "Amérique du Sud"],
+      answer: 2
+    },
+    {
+      question: "Quel océan borde la côte ouest de la France ?",
+      options: ["Océan Atlantique", "Océan Pacifique", "Mer Méditerranée", "Mer Noire"],
+      answer: 0
+    },
+    {
+      question: "Quel est le désert le plus vaste du monde ?",
+      options: ["Sahara", "Gobi", "Antarctique", "Désert d'Arabie"],
+      answer: 2
+    },
+    {
+      question: "Combien y a-t-il de continents sur Terre ?",
+      options: ["5", "6", "7", "8"],
+      answer: 2
+    },
+    {
+      question: "Dans quel pays se trouve le Machu Picchu ?",
+      options: ["Mexique", "Pérou", "Colombie", "Bolivie"],
+      answer: 1
+    },
+    {
+      question: "Quel pays a la plus grande population ?",
+      options: ["États-Unis", "Chine", "Inde", "Indonésie"],
+      answer: 2
+    },
+    {
+      question: "Quelle mer sépare l’Europe de l’Afrique ?",
+      options: ["Mer du Nord", "Mer Méditerranée", "Mer Noire", "Mer Rouge"],
+      answer: 1
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    document.getElementById("result").textContent = `Tu as obtenu ${score} sur ${quizData.length} !`;
+  }
+
+  loadQuiz();
+</script>
+
+</body>
+</html>

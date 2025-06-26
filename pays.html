@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz sur les Pays du Monde</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4fcff;
+      margin: 40px;
+    }
+    .quiz-container {
+      max-width: 600px;
+      margin: auto;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+    .question {
+      font-weight: bold;
+    }
+    .answers {
+      margin: 15px 0;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+    .result {
+      font-size: 18px;
+      margin-top: 20px;
+      font-weight: bold;
+      color: green;
+    }
+  </style>
+</head>
+<body>
+
+<div class="quiz-container">
+  <div id="quiz"></div>
+  <button onclick="submitQuiz()">Soumettre</button>
+  <div id="result" class="result"></div>
+</div>
+
+<script>
+  const quizData = [
+    {
+      question: "Quelle est la capitale du Japon ?",
+      options: ["Pékin", "Séoul", "Tokyo", "Bangkok"],
+      answer: 2
+    },
+    {
+      question: "Quel pays a une feuille d'érable sur son drapeau ?",
+      options: ["États-Unis", "Canada", "Australie", "Norvège"],
+      answer: 1
+    },
+    {
+      question: "Quel pays est entièrement entouré par l'Italie ?",
+      options: ["Slovénie", "Saint-Marin", "Suisse", "Vatican"],
+      answer: 3
+    },
+    {
+      question: "Quel pays a la capitale Brasília ?",
+      options: ["Brésil", "Argentine", "Portugal", "Mexique"],
+      answer: 0
+    },
+    {
+      question: "Dans quel pays se trouve la ville du Caire ?",
+      options: ["Maroc", "Égypte", "Algérie", "Tunisie"],
+      answer: 1
+    },
+    {
+      question: "Quelle est la capitale de l'Allemagne ?",
+      options: ["Francfort", "Berlin", "Munich", "Hambourg"],
+      answer: 1
+    },
+    {
+      question: "Quel pays possède le plus d’îles au monde ?",
+      options: ["Philippines", "Indonésie", "Suède", "Grèce"],
+      answer: 2
+    },
+    {
+      question: "Quel pays est le plus peuplé au monde ?",
+      options: ["Inde", "États-Unis", "Chine", "Indonésie"],
+      answer: 0
+    },
+    {
+      question: "Quel pays a pour capitale Buenos Aires ?",
+      options: ["Chili", "Argentine", "Pérou", "Brésil"],
+      answer: 1
+    },
+    {
+      question: "Quel est le seul pays d'Amérique centrale sans littoral ?",
+      options: ["Guatemala", "Honduras", "El Salvador", "Nicaragua"],
+      answer: 2
+    }
+  ];
+
+  function loadQuiz() {
+    const quizContainer = document.getElementById("quiz");
+    quizContainer.innerHTML = "";
+    quizData.forEach((q, index) => {
+      const questionDiv = document.createElement("div");
+      questionDiv.className = "question-block";
+      questionDiv.innerHTML = `
+        <p class="question">${index + 1}. ${q.question}</p>
+        <div class="answers">
+          ${q.options.map((option, i) => `
+            <label>
+              <input type="radio" name="question${index}" value="${i}"> ${option}
+            </label><br>
+          `).join('')}
+        </div>
+      `;
+      quizContainer.appendChild(questionDiv);
+    });
+  }
+
+  function submitQuiz() {
+    let score = 0;
+    quizData.forEach((q, index) => {
+      const selected = document.querySelector(`input[name="question${index}"]:checked`);
+      if (selected && parseInt(selected.value) === q.answer) {
+        score++;
+      }
+    });
+    document.getElementById("result").textContent = `Tu as obtenu ${score} sur ${quizData.length} !`;
+  }
+
+  loadQuiz();
+</script>
+
+</body>
+</html>
